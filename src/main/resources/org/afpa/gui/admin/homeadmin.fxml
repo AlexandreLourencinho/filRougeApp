@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.afpa.gui.admin.HomeAdminController">
+   <children>
+      <VBox layoutX="118.0" layoutY="40.0" spacing="50.0">
+         <children>
+            <Label text="PANNEAU ADMINISTRATEUR">
+               <VBox.margin>
+                  <Insets left="120.0" />
+               </VBox.margin>
+            </Label>
+            <VBox spacing="50.0">
+               <children>
+                  <HBox spacing="130.0">
+                     <children>
+                        <Button fx:id="adminGestionUtilisateurs" mnemonicParsing="false" prefHeight="70.0" prefWidth="128.0" text="Gerer les utilisateurs" />
+                        <Button fx:id="adminGestionClients" mnemonicParsing="false" prefHeight="70.0" prefWidth="128.0" text="Gérer les clients" />
+                     </children>
+                  </HBox>
+                  <Button fx:id="adminGestionCommandes" mnemonicParsing="false" prefHeight="70.0" prefWidth="131.0" text="Gérer les commandes">
+                     <VBox.margin>
+                        <Insets left="129.0" />
+                     </VBox.margin>
+                  </Button>
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
