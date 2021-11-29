@@ -10,8 +10,6 @@ public class User {
     private String email;
     private String roles;
     private String jwtKey;
-    public static String jwt;
-    public static ArrayList<User> listeUtilisateurs = new ArrayList<>();
 
     public User() {
 

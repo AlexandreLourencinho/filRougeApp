@@ -8,7 +8,7 @@ public class Constants {
 
     public static User staticUser;
 
-    public static ArrayList<String> listeDesRoles() {
+    public static ArrayList<String> listRoles() {
         ArrayList<String> strListeRoles = new ArrayList<>();
         strListeRoles.add("admin");
         strListeRoles.add("commercial");

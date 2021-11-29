@@ -9,7 +9,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import org.afpa.App;
+import org.afpa.dao.UserDAO;
 import org.afpa.environnemnt.Constants;
+import org.afpa.environnemnt.EnvironnementVariables;
 import org.afpa.model.User;
 
 public class ManageUsersController {
@@ -32,27 +34,36 @@ public class ManageUsersController {
     private TableColumn<User, String> columnMail;
     @FXML
     private TableColumn<User, String> columnRole;
-    private ObservableList<User> model = FXCollections.observableArrayList();
+    private final ObservableList<User> model = FXCollections.observableArrayList();
+
 
     public void initialize() {
         this.columnName.setCellValueFactory(new PropertyValueFactory<>("nom"));
         this.columnFirstname.setCellValueFactory(new PropertyValueFactory<>("prenom"));
         this.columnMail.setCellValueFactory(new PropertyValueFactory<>("email"));
         this.columnRole.setCellValueFactory(new PropertyValueFactory<>("roles"));
-        this.listeUtilisateurs();
+        this.UsersList();
         addUser.setOnAction(event -> this.addUserWindow());
         updateUser.setOnAction(event -> this.updateUserWindow());
         backManageAdmin.setOnAction(event -> {
-            User.listeUtilisateurs.clear();
+            EnvironnementVariables.UsersLists.clear();
             App.changeFxml("admin/homeadmin.fxml");
         });
         updateUser.disableProperty().bind(Bindings.isEmpty(userTable.getSelectionModel().getSelectedItems()));
-
+        deleteUser.disableProperty().bind(Bindings.isEmpty(userTable.getSelectionModel().getSelectedItems()));
+        deleteUser.setOnAction(event -> this.deleteUserActivity());
+        App.stage.focusedProperty().addListener((ov, onHidden, onShown) -> {
+            if (onShown) {
+                EnvironnementVariables.UsersLists.clear();
+                UserDAO.fetchGetUsers();
+                this.UsersList();
+            }
+        });
     }
 
-    public void listeUtilisateurs() {
+    public void UsersList() {
         this.model.clear();
-        this.model.addAll(User.listeUtilisateurs);
+        this.model.addAll(EnvironnementVariables.UsersLists);
         this.userTable.setItems(model);
     }
 
@@ -62,8 +73,17 @@ public class ManageUsersController {
 
     public void updateUserWindow() {
         Constants.staticUser = userTable.getSelectionModel().getSelectedItem();
-        System.out.println(Constants.staticUser);
         App.newFen("admin/users/userscontrols/updateuser.fxml");
+    }
+
+    public void deleteUserActivity() {
+        User user = userTable.getSelectionModel().getSelectedItem();
+        boolean dao = new UserDAO().fetchDeleteUser(user);
+        if (dao) {
+            EnvironnementVariables.UsersLists.clear();
+            UserDAO.fetchGetUsers();
+            this.UsersList();
+        }
     }
 
 

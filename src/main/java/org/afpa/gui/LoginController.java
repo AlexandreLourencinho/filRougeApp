@@ -6,6 +6,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import org.afpa.App;
+import org.afpa.dao.DaoBase;
+import org.afpa.environnemnt.Constants;
+import org.afpa.environnemnt.EnvironnementVariables;
 import org.afpa.model.User;
 import org.afpa.utils.Tools;
 import org.json.JSONObject;
@@ -54,34 +57,19 @@ public class LoginController {
             values.put("password", this.password);
             values.put("mail", this.mail);
             try {
-
-            ObjectMapper objMapper = new ObjectMapper();
-            String bodyRequest = objMapper.writeValueAsString(values);
-            HttpClient client = HttpClient.newHttpClient();
-            HttpRequest request = HttpRequest.newBuilder().version(HttpClient.Version.HTTP_1_1)
-                    .uri(URI.create("http://localhost:8080/auth"))
-                    .POST(HttpRequest.BodyPublishers.ofString(bodyRequest))
-                    .build();
-            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-
+                HttpResponse<String> response = DaoBase.buildRequest("/auth", "POSTAUTH", values);
                 JSONObject json = new JSONObject(response.body());
                 JSONObject jsonNested = (JSONObject) json.get("user");
-                User.jwt = (String) json.get("token");
-                System.out.println(jsonNested.get("roles").toString());
-                System.out.println(User.jwt);
+                EnvironnementVariables.jwt = (String) json.get("token");
                 String role = jsonNested.get("roles").toString();
                 switch (role) {
-                    case "admin":
-                        App.changeFxml("admin/homeadmin.fxml");
-                        break;
-                    case "commercial":
-                        System.out.println("not implemented yet");
-                    default:
-                        Tools.alertTool("ERROR","ERRCODE: ECF-001", "une erreur est survenue " +
-                                "au moment du chargement du module. Veuillez contacter un administrateur.");
+                    case "admin" -> App.changeFxml("admin/homeadmin.fxml");
+                    case "commercial" -> System.out.println("not implemented yet");
+                    default -> Tools.alertTool("ERROR", "ERRCODE: ECF-001", "une erreur est survenue " +
+                            "au moment du chargement du module. Veuillez contacter un administrateur.");
                 }
             } catch (Exception e) {
-                Tools.alertTool("error","ERRCODE: ERRL-001","Un problème est survenu " +
+                Tools.alertTool("error", "ERRCODE: ERRL-001", "Un problème est survenu " +
                         "lors de la connexion. Contactez un administrateur." + e);
             }
 

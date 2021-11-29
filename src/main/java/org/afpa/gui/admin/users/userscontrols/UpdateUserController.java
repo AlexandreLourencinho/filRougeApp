@@ -6,7 +6,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 import org.afpa.dao.UserDAO;
 import org.afpa.environnemnt.Constants;
 import org.afpa.model.User;
@@ -23,11 +22,10 @@ public class UpdateUserController {
     private TextField mailField;
     @FXML
     private Button update;
-    private ObservableList<String> listeDesRoles = FXCollections.observableArrayList();
+    private final ObservableList<String> listeDesRoles = FXCollections.observableArrayList();
 
     public void initialize() {
-        System.out.println(Constants.listeDesRoles());
-        listeDesRoles.addAll(Constants.listeDesRoles());
+        listeDesRoles.addAll(Constants.listRoles());
         listeRoles.setPromptText("Choisissez un rôle pour cet utilisateur.");
         listeRoles.setItems(listeDesRoles);
         nameField.setText(Constants.staticUser.getNom());
@@ -43,7 +41,10 @@ public class UpdateUserController {
                     .setRoles(this.listeRoles.getSelectionModel().getSelectedItem());
             System.out.println(user);
             UserDAO dao = new UserDAO();
-            dao.fetchUpdateUser(user);
+            boolean result = dao.fetchUpdateUser(user);
+            if (result) {
+                UserDAO.fetchGetUsers();
+            }
 
         });
     }

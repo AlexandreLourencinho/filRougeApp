@@ -6,10 +6,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 import org.afpa.dao.UserDAO;
 import org.afpa.environnemnt.Constants;
 import org.afpa.model.User;
+import org.afpa.utils.Tools;
 
 public class AddUserController {
 
@@ -23,29 +23,16 @@ public class AddUserController {
     private TextField mailField;
     @FXML
     private Button add;
-    private ObservableList<String> listeDesRoles = FXCollections.observableArrayList();
+    private final ObservableList<String> listeDesRoles = FXCollections.observableArrayList();
     private String nom;
     private String prenom;
     private String mail;
     private String role;
 
     public void initialize() {
-        listeDesRoles.addAll(Constants.listeDesRoles());
+        listeDesRoles.addAll(Constants.listRoles());
         listeRoles.setPromptText("Choisissez un rôle pour cet utilisateur.");
         listeRoles.setItems(listeDesRoles);
-        nameField.setOnKeyReleased(event -> {
-            this.nom = nameField.getText();
-        });
-        firstnameField.setOnKeyReleased(event -> {
-            this.prenom = firstnameField.getText();
-        });
-        mailField.setOnKeyReleased(event -> {
-            this.mail = mailField.getText();
-        });
-        listeRoles.setOnAction(event -> {
-            System.out.println(listeRoles.getSelectionModel().getSelectedItem());
-            this.role = listeRoles.getSelectionModel().getSelectedItem();
-        });
         add.setOnAction(event -> {
             User user = new User()
                     .setNom(this.nameField.getText())
@@ -58,6 +45,8 @@ public class AddUserController {
                 this.firstnameField.clear();
                 this.mailField.clear();
                 this.listeRoles.getSelectionModel().clearSelection();
+            } else {
+                Tools.alertTool("warning", "ERRCODE: EAU002", "Un problème à eu lieu lors de l'ajout de l'utilisateur.");
             }
         });
 
