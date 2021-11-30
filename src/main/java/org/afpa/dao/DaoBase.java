@@ -19,7 +19,6 @@ public class DaoBase {
         switch (method) {
             case "POSTAUTH" -> {
                 try {
-                    System.out.println();
                     ObjectMapper objMapper = new ObjectMapper();
                     String bodyRequest = objMapper.writeValueAsString(values);
                     HttpRequest request = HttpRequest.newBuilder().version(HttpClient.Version.HTTP_1_1)

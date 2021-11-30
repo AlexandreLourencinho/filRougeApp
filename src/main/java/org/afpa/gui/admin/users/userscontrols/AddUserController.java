@@ -24,10 +24,6 @@ public class AddUserController {
     @FXML
     private Button add;
     private final ObservableList<String> listeDesRoles = FXCollections.observableArrayList();
-    private String nom;
-    private String prenom;
-    private String mail;
-    private String role;
 
     public void initialize() {
         listeDesRoles.addAll(Constants.listRoles());

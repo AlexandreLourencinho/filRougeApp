@@ -1,21 +1,14 @@
 package org.afpa.gui;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import org.afpa.App;
 import org.afpa.dao.DaoBase;
-import org.afpa.environnemnt.Constants;
 import org.afpa.environnemnt.EnvironnementVariables;
-import org.afpa.model.User;
 import org.afpa.utils.Tools;
 import org.json.JSONObject;
-
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.HashMap;
 
