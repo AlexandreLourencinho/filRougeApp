@@ -20,7 +20,11 @@ public class UserDAO {
                 User user = new User(obj.get("nom").toString(), obj.get("prenom").toString(),
                         obj.get("mail").toString(),
                         obj.get("roles").toString()).setId((Integer) obj.get("id"));
-                EnvironnementVariables.UsersLists.add(user);
+                if (user.getRoles().equals("Client")) {
+                    EnvironnementVariables.ClientsLists.add(user);
+                } else {
+                    EnvironnementVariables.UsersLists.add(user);
+                }
             }
         } catch (Exception e) {
             Tools.alertTool("error", "ERRCODE: EFU001", "impossible de récupérer la liste.");

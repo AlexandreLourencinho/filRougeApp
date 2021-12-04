@@ -1,6 +1,9 @@
 package org.afpa.utils;
 
 import javafx.scene.control.Alert;
+import org.afpa.App;
+import org.afpa.environnemnt.Constants;
+import org.afpa.environnemnt.EnvironnementVariables;
 
 public class Tools {
 
@@ -25,6 +28,14 @@ public class Tools {
         }
 
         alert.showAndWait();
+    }
+
+    public static void disconnectApp() {
+        Constants.staticUser = null;
+        EnvironnementVariables.ClientsLists = null;
+        EnvironnementVariables.UsersLists = null;
+        EnvironnementVariables.jwt = null;
+        App.changeFxml("login.fxml");
     }
 
 }

@@ -30,8 +30,23 @@ public class HomeAdminController {
                 Tools.alertTool("error", "ERRCODE: EFU-001", "une erreur est survenue lors de la récupération des données."
                         + e.getMessage());
                 EnvironnementVariables.UsersLists.clear();
+                EnvironnementVariables.ClientsLists.clear();
             }
         });
+        adminGestionClients.setOnAction(event -> {
+            try {
+                UserDAO.fetchGetUsers();;
+                if (EnvironnementVariables.ClientsLists.size() != 0) {
+                    App.changeFxml("admin/clients/manageclients.fxml");
+                }
+            } catch (Exception e){
+                Tools.alertTool("error", "ERRCODE: EFU-001", "une erreur est survenue lors de la récupération des données."
+                        + e.getMessage());
+                EnvironnementVariables.UsersLists.clear();
+                EnvironnementVariables.ClientsLists.clear();
+            }
+        });
+
     }
 
 }

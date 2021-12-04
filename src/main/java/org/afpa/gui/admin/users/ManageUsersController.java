@@ -13,9 +13,12 @@ import org.afpa.dao.UserDAO;
 import org.afpa.environnemnt.Constants;
 import org.afpa.environnemnt.EnvironnementVariables;
 import org.afpa.model.User;
+import org.afpa.utils.Tools;
 
 public class ManageUsersController {
 
+    @FXML
+    private Button disconnect;
     @FXML
     private Button addUser;
     @FXML
@@ -46,15 +49,16 @@ public class ManageUsersController {
         addUser.setOnAction(event -> this.addUserWindow());
         updateUser.setOnAction(event -> this.updateUserWindow());
         backManageAdmin.setOnAction(event -> {
-            EnvironnementVariables.UsersLists.clear();
+        EnvironnementVariables.clearUsers();
             App.changeFxml("admin/homeadmin.fxml");
         });
         updateUser.disableProperty().bind(Bindings.isEmpty(userTable.getSelectionModel().getSelectedItems()));
         deleteUser.disableProperty().bind(Bindings.isEmpty(userTable.getSelectionModel().getSelectedItems()));
         deleteUser.setOnAction(event -> this.deleteUserActivity());
+        disconnect.setOnAction(event -> Tools.disconnectApp());
         App.stage.focusedProperty().addListener((ov, onHidden, onShown) -> {
             if (onShown) {
-                EnvironnementVariables.UsersLists.clear();
+                EnvironnementVariables.clearUsers();
                 UserDAO.fetchGetUsers();
                 this.UsersList();
             }
@@ -80,7 +84,7 @@ public class ManageUsersController {
         User user = userTable.getSelectionModel().getSelectedItem();
         boolean dao = new UserDAO().fetchDeleteUser(user);
         if (dao) {
-            EnvironnementVariables.UsersLists.clear();
+            EnvironnementVariables.clearUsers();
             UserDAO.fetchGetUsers();
             this.UsersList();
         }
