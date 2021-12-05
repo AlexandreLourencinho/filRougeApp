@@ -37,7 +37,7 @@ public class App extends Application {
 
     public static void changeFxml (String fxml) {
         try {
-            Parent root = FXMLLoader.load(Objects.requireNonNull(App.class.getResource("gui/" + fxml)));
+            Parent root = FXMLLoader.load(Objects.requireNonNull(Launcher.class.getResource("gui/" + fxml)));
             scene.setRoot(root);
             stage.show();
         } catch(Exception e) {
@@ -48,7 +48,7 @@ public class App extends Application {
     public static void newFen(String fxml) {
         try {
             Stage stage1 = new Stage();
-            Parent root = FXMLLoader.load(Objects.requireNonNull(App.class.getResource("gui/" + fxml)));
+            Parent root = FXMLLoader.load(Objects.requireNonNull(Launcher.class.getResource("gui/" + fxml)));
             Scene scene = new Scene(root);
             stage1.setScene(scene);
             stage1.show();

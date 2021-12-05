@@ -3,9 +3,9 @@ package org.afpa.gui.admin;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import org.afpa.App;
+import org.afpa.Launcher;
 import org.afpa.dao.UserDAO;
 import org.afpa.environnemnt.EnvironnementVariables;
-import org.afpa.model.User;
 import org.afpa.utils.Tools;
 
 public class HomeAdminController {

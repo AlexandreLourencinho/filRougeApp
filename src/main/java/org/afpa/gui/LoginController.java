@@ -5,6 +5,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import org.afpa.App;
+import org.afpa.Launcher;
 import org.afpa.dao.DaoBase;
 import org.afpa.environnemnt.EnvironnementVariables;
 import org.afpa.utils.Tools;
